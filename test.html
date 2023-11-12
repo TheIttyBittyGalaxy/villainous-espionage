@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+
+    <link rel="stylesheet" href="main.css">
+    <style>
+        body {
+            background-color: black;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+        }
+
+        .card {
+            position: absolute;
+            bottom: 0;
+            left: 76mm;
+            width: 63mm;
+            width: 74mm;
+        }
+    </style>
+
+    <script src="data.js"></script>
+    <script src="tidy-data.js"></script>
+    <script src="generate.js"></script>
+</head>
+
+<body>
+
+</body>
+
+<script>
+    const card = createCardElement({
+        "name": "Raven",
+        "kind": "Ally",
+        "ability": "Before Maleficent moves, you may move Raven to any location and perform one available action at his new location. Raven cannot perform Fate actions.",
+        "strength": 1,
+        "cost": 3
+    });
+    card.style.setProperty("--villain-border-style", "double");
+    card.style.setProperty("--villain-color", "#053210");
+
+    // const card = createCardElement({
+    //     "name": "Manipulation",
+    //     "kind": "Condition",
+    //     "ability": "During their turn, if another player has three or more Allies in their realm, you may play Manipulation. Choose any card from your discard pile and put it into your hand."
+    // });
+    // card.style.setProperty("--villain-border-style", "double");
+    // card.style.setProperty("--villain-color", "#342118");
+
+    document.body.appendChild(card)
+
+    // CARD TEXT SIZING //
+    function updateCardFontSize(e) {
+        for (const e of document.querySelectorAll(".card"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+
+        for (const e of document.querySelectorAll(".backing"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+
+        for (const e of document.querySelectorAll(".board"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+    }
+
+    updateCardFontSize()
+    window.addEventListener("resize", updateCardFontSize);
+</script>
+
+</html>

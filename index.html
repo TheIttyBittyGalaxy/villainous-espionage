@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villainous: Espionage</title>
+
+    <link rel="stylesheet" href="main.css">
+    <style>
+        :root {
+            font-size: 18px;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+            color: white;
+            background: #0d0812;
+            display: grid;
+            grid-template-rows: 80px 1fr;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: row;
+            background-color: #0f1013;
+        }
+
+        nav button {
+            border: none;
+            outline: none;
+            margin: 0;
+            font-size: inherit;
+            color: inherit;
+
+            --color: #053a14;
+            padding: 15px;
+            text-align: center;
+            font-family: 'Crimson Text', serif;
+            font-size: 1.5rem;
+            box-shadow: 0 0 14px 2px black inset;
+            background-color: #0f1013;
+            transition: background-color .2s;
+            width: 20%;
+        }
+
+        @media screen and (min-width: 800px) {
+            body {
+                grid-template-columns: minmax(min-content, 180px) 1fr;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            nav button {
+                font-size: 2rem;
+                width: 100%;
+            }
+        }
+
+        nav button.selected,
+        nav button:hover {
+            background-color: var(--color);
+        }
+
+        nav button:hover {
+            cursor: pointer;
+        }
+
+        #tabs {
+            min-height: 100vh;
+        }
+
+        .tab {
+            box-sizing: border-box;
+            padding: 20px;
+            height: 100%;
+            overflow-y: scroll;
+            box-shadow: 0 0 14px 2px black inset;
+            background-color: #212226;
+        }
+
+        div#splash {
+            background: #053a14;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            text-align: center;
+            /* background: linear-gradient(45deg,
+                    #651460 0%,
+                    #651460 20%,
+                    #600b0b 20%,
+                    #600b0b 40%,
+                    #513005 40%,
+                    #513005 60%,
+                    #053a14 60%,
+                    #053a14 80%,
+                    #00453b 80%,
+                    #00453b 100%); */
+        }
+
+        div#splash img {
+            width: 80vw;
+        }
+
+        div#splash span {
+            font-size: 8vw;
+            text-shadow: 0px 0px 1vw #F6F64B, 1px 0.2vw #fff8;
+            font-weight: bold;
+            font-family: 'Henny Penny', cursive;
+        }
+
+        .tab:not(.selected) {
+            display: none !important;
+        }
+
+        .board {
+            box-shadow: 0 0 14px 2px rgba(0, 0, 0, .8);
+        }
+
+        .cards {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr;
+            /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+        }
+
+        @media screen and (max-width: 649px) {
+            .cards {
+                grid-auto-rows: minmax(200px, calc(100vh - 140px));
+                justify-items: center;
+            }
+
+            .card {
+                height: 100%;
+            }
+        }
+
+        @media screen and (min-width: 650px) {
+            .cards {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media screen and (min-width: 920px) {
+            .cards {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        @media screen and (min-width: 1120px) {
+            .cards {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+
+        @media screen and (min-width: 1320px) {
+            .cards {
+                grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            }
+        }
+
+        .card {
+            box-shadow: 0 0 14px 2px rgba(0, 0, 0, .8);
+            background: linear-gradient(0deg, var(--body-color) 0%, var(--body-color) 52%, #222 52%, #2d2d2d 100%);
+        }
+
+        @media screen and (min-width: 800px) {
+            .deck-list {
+                width: fit-content;
+                column-count: 3;
+                column-width: 250px;
+            }
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Crimson Text', serif;
+            text-transform: uppercase;
+            margin: 1rem 0;
+            text-align: center;
+            color: var(--accent-color);
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 6rem;
+        }
+
+        h2 {
+            font-size: 3rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        @media screen and (min-width: 800px) {
+            .villain-guide {
+                column-count: 2;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            .villain-guide {
+                column-count: 3;
+            }
+        }
+
+        .villain-guide .objective {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .villain-guide section {
+            break-inside: avoid-column;
+        }
+
+        .villain-guide section:first-child h3 {
+            margin-top: 0;
+        }
+    </style>
+
+    <script src="data.js"></script>
+    <script src="tidy-data.js"></script>
+    <script src="generate.js"></script>
+</head>
+
+<body>
+    <nav id="nav-bar"></nav>
+    <div id="tabs">
+        <div id="splash" class="tab selected">
+            <img src="logo.webp" alt="Villainous">
+            <span>Espionage</span>
+        </div>
+    </div>
+</body>
+<script>
+
+    // UPDATE ELEMENT SIZING //
+    function updateElementPercentageUnits(e) {
+        for (const e of document.querySelectorAll(".card"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+
+        for (const e of document.querySelectorAll(".backing"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+
+        for (const e of document.querySelectorAll(".board"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+    }
+
+    window.addEventListener("resize", updateElementPercentageUnits);
+
+    // SELECT VILLAIN MENU //
+    function getCSSid(villain) {
+        return "villain-" + villain.name.toLowerCase();
+    }
+
+    function selectVillain(id) {
+        const selected_button = document.querySelector("nav button.selected")
+        if (selected_button) selected_button.classList.remove("selected");
+
+        const selected_tab = document.querySelector(".tab.selected")
+        if (selected_tab) selected_tab.classList.remove("selected");
+
+        const new_button = document.querySelector("nav button." + id);
+        if (new_button) new_button.classList.add("selected");
+        document.querySelector(".tab#" + id).classList.add("selected");
+
+        updateElementPercentageUnits();
+    }
+
+    // GENERATE HTML //
+    for (const villain of data) {
+        const tab = create(null, "div", "tab", "villain");
+        tab.id = getCSSid(villain);
+
+        // Navigation button
+        {
+            const button = create(document.querySelector("#nav-bar"), "button")
+            button.innerText = villain.name;
+            button.style.setProperty("--color", villain.style.color)
+            button.classList.add(getCSSid(villain))
+            button.addEventListener("click", event => {
+                document.querySelector("#splash").style.background = villain.style.color;
+                if (button.classList.contains("selected")) {
+                    selectVillain("splash")
+                } else {
+                    selectVillain(getCSSid(villain))
+                }
+            })
+        }
+
+        // Heading
+        {
+            const heading = create(tab, "h1");
+            heading.innerText = villain.name;
+        }
+
+        // Board
+        {
+            const heading = create(tab, "h2");
+            heading.innerText = "Board";
+            tab.appendChild(createBoardElement(villain));
+        }
+
+        // Villain Guide
+        {
+            const heading = create(tab, "h2")
+            heading.innerText = "Villain Guide";
+
+            const guide = create(tab, "div", "villain-guide")
+            let first_part = true;
+            for (const part of villain.guide) {
+                const section = create(guide, "section");
+
+                const heading = create(section, "h3");
+                heading.innerText = part.heading;
+
+                if (first_part) {
+                    const paragraph = create(section, "p");
+                    paragraph.innerText = villain.objective;
+                    paragraph.classList.add("objective");
+                    first_part = false;
+                }
+
+                for (const text of part.body) {
+                    const paragraph = create(section, "p");
+                    paragraph.innerText = text;
+                }
+            }
+        }
+
+        // Villain Deck
+        {
+            const heading = create(tab, "h2");
+            heading.innerText = "Villain Deck";
+
+            const list = create(tab, "ul", "deck-list");
+            let current_divider = null;
+            let current_copies = 0;
+
+            for (const card of villain.villain_deck) {
+                // List Item
+                const i = create(list, "li");
+                i.innerText = card.name
+                if (card.copies > 1)
+                    i.innerText += " (x" + card.copies + ")"
+
+                // Card Preview
+                if (card.copies != current_copies) {
+                    current_copies = card.copies;
+
+                    const heading = create(tab, "h3");
+                    heading.innerText = current_copies == 1 ? "1 copy" : current_copies + " copies";
+
+                    current_divider = create(tab, "div", "cards");
+                }
+
+                current_divider.appendChild(createCardElement(villain, card));
+            }
+        }
+
+        // Fate Deck
+        {
+            const heading = create(tab, "h2");
+            heading.innerText = "Fate Deck";
+
+            const list = create(tab, "ul", "deck-list");
+            let current_divider = null;
+            let current_copies = 0;
+
+            for (const card of villain.fate_deck) {
+                // List Item
+                const i = create(list, "li");
+                i.innerText = card.name
+                if (card.copies > 1)
+                    i.innerText += " (x" + card.copies + ")"
+
+                // Card Preview
+                if (card.copies != current_copies) {
+                    current_copies = card.copies;
+
+                    const heading = create(tab, "h3");
+                    heading.innerText = current_copies == 1 ? "1 copy" : current_copies + " copies";
+
+                    current_divider = create(tab, "div", "cards");
+                }
+
+                current_divider.appendChild(createCardElement(villain, card));
+            }
+        }
+        document.getElementById("tabs").appendChild(tab);
+    }
+</script>
+
+</html>

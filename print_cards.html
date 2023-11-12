@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Cards</title>
+
+    <link rel="stylesheet" href="main.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        @page {
+            size: A4 portrait;
+        }
+
+        .page {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+
+            width: 210mm;
+            height: 297mm;
+            page-break-after: always;
+            overflow: hidden;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            justify-content: center;
+            align-content: center;
+            gap: 2mm;
+            grid-template:
+                "a b c"
+                "d e f"
+                "g h i"
+            ;
+        }
+
+        .page:nth-child(2n+1) .grid {
+            grid-template:
+                "c b a"
+                "f e d"
+                "i h g"
+            ;
+        }
+
+        .card,
+        .backing {
+            width: 63mm;
+            flex-shrink: 0;
+            height: max-content;
+        }
+
+        .backs {
+            display: none;
+        }
+
+        @media screen {
+            body {
+                background: #aaa;
+            }
+
+            .page {
+                background: white;
+                margin: 20mm auto;
+            }
+        }
+    </style>
+
+    <script src="data.js"></script>
+    <script src="tidy-data.js"></script>
+    <script src="generate.js"></script>
+</head>
+
+<body>
+</body>
+<script>
+    const empty_villain = {
+        name: "",
+        style: {
+            color: "white",
+            border: "double"
+        }
+    }
+
+    let cards = 0;
+
+    let front_page, back_page;
+    let front, back;
+    function createFrontAndBack() {
+        front_page = create(null, "div", "page");
+        front = create(front_page, "div", "grid");
+        back_page = create(null, "div", "page");
+        back = create(back_page, "div", "grid");
+    }
+
+    function addCard(f, b) {
+        front.appendChild(f);
+        back.appendChild(b);
+
+        f.style.gridArea = "abcdefghi"[cards];
+        b.style.gridArea = "abcdefghi"[cards];
+
+        cards++;
+
+        if (cards >= 9) {
+            flush();
+        }
+    }
+
+    function flush() {
+        if (cards == 0) {
+            return
+        }
+
+        while (cards < 9) {
+            const f = createCardElement(empty_villain, {
+                name: "",
+                kind: "",
+                ability: " ",
+                cost: "",
+                strength: "",
+            });
+            f.style.setProperty("--villain-color", "#fbfbfb")
+            front.appendChild(f);
+
+            const b = createBackingElement(empty_villain, {
+                name: "",
+                style: {
+                    body: "#fbfbfb",
+                    border: "double"
+                }
+            });
+            back.appendChild(b);
+            cards++;
+        }
+
+        document.body.appendChild(front_page);
+        document.body.appendChild(back_page);
+        createFrontAndBack();
+
+        cards = 0
+    }
+
+    createFrontAndBack();
+    for (const villain of data) {
+        for (const card of villain.villain_deck) {
+            for (let i = 0; i < card.copies; i++) {
+                const f = createCardElement(villain, card);
+                const b = createBackingElement(villain, card);
+                addCard(f, b)
+            }
+        }
+
+        for (const card of villain.fate_deck) {
+            for (let i = 0; i < card.copies; i++) {
+                const f = createCardElement(villain, card);
+                const b = createBackingElement(villain, card);
+                addCard(f, b)
+            }
+        }
+    }
+
+    flush();
+
+    // CARD TEXT SIZING //
+    function updateCardFontSize(e) {
+        for (const e of document.querySelectorAll(".card"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+
+        for (const e of document.querySelectorAll(".backing"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+
+        for (const e of document.querySelectorAll(".board"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+    }
+
+    updateCardFontSize()
+    window.addEventListener("resize", updateCardFontSize);
+
+</script>
+
+</html>

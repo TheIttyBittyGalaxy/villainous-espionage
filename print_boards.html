@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Boards</title>
+
+    <link rel="stylesheet" href="main.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        @page {
+            size: A3 landscape;
+        }
+
+        .page {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            flex-direction: column;
+
+            height: 297mm;
+            width: 420mm;
+            page-break-after: always;
+            overflow: hidden;
+        }
+
+        @media screen {
+            body {
+                background: #aaa;
+            }
+
+            .page {
+                background: white;
+                margin: 20mm auto;
+            }
+        }
+
+        .board {
+            width: 380mm;
+            /* height: 107mm; */
+        }
+
+        .wrapper {
+            background-color: #eee;
+            padding: 5mm;
+            width: min-content;
+            margin: auto;
+        }
+
+        .board .portrait,
+        .board .locations .image {
+            background: white;
+        }
+    </style>
+
+    <script src="data.js"></script>
+    <script src="tidy-data.js"></script>
+    <script src="generate.js"></script>
+</head>
+
+<body>
+</body>
+<script>
+    let page = create(document.body, "div", "page");
+    let boards = 0;
+    for (const villain of data) {
+        if (boards == 2) {
+            boards = 0;
+            page = create(document.body, "div", "page")
+        }
+        const wrapper = create(page, "div", "wrapper");
+        wrapper.appendChild(createBoardElement(villain));
+        boards++;
+    }
+
+    // CARD TEXT SIZING //
+    function updateCardFontSize(e) {
+        for (const e of document.querySelectorAll(".card"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+
+        for (const e of document.querySelectorAll(".backing"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+
+        for (const e of document.querySelectorAll(".board"))
+            e.style.setProperty("--point", e.clientHeight / 100 + "px")
+    }
+
+    updateCardFontSize()
+    window.addEventListener("resize", updateCardFontSize);
+
+</script>
+
+</html>

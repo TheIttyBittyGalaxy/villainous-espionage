@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats</title>
+
+    <script src="data.js"></script>
+    <script src="tidy-data.js"></script>
+</head>
+
+<body>
+</body>
+<script>
+    // STATS //
+    for (const villain of data) {
+        console.log(villain.name)
+        const stats = {}
+
+        function count(stat, amt) {
+            amt = amt || 1;
+            if (stats[stat])
+                stats[stat] += amt;
+            else
+                stats[stat] = amt;
+        }
+
+        for (const card of villain.villain_deck)
+            count("villain_cards", card.copies);
+
+        for (const card of villain.fate_deck)
+            count("fate_cards", card.copies);
+
+        for (const location of villain.locations) {
+            for (const action of location.upper) {
+                count("action_total_" + (action.toLowerCase().replaceAll(" ", "_")));
+                count("action_upper_" + (action.toLowerCase().replaceAll(" ", "_")));
+            }
+
+            for (const action of location.lower) {
+                count("action_total_" + (action.toLowerCase().replaceAll(" ", "_")));
+                count("action_lower_" + (action.toLowerCase().replaceAll(" ", "_")));
+            }
+        }
+
+        if (stats.action_upper_fate != 1)
+            console.warn(`${villain.name} has ${stats.action_upper_fate || 0} upper fate actions`)
+
+        if (stats.action_lower_fate != 1)
+            console.warn(`${villain.name} has ${stats.action_lower_fate || 0} lower fate actions`)
+
+        if (stats.action_upper_discard != 1)
+            console.warn(`${villain.name} has ${stats.action_upper_discard || 0} upper discard actions`)
+
+        if (stats.action_lower_discard != 1)
+            console.warn(`${villain.name} has ${stats.action_lower_discard || 0} lower discard actions`)
+
+
+        if (stats.action_lower_discard == 0)
+            console.warn(`${villain.name} has no lower discard actions`)
+
+        if (stats.action_lower_play_card == 0)
+            console.warn(`${villain.name} has no lower play a Card actions`)
+
+        let s = ""
+        for (const key in stats)
+            s += key + ": " + stats[key] + "\n"
+        console.log(s)
+    }
+
+</script>
+
+</html>
