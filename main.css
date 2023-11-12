@@ -1,361 +1,367 @@
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text&family=Henny+Penny&family=Roboto:wght@400;500&family=Tilt+Prism&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Crimson+Text&family=Henny+Penny&family=Roboto:wght@400;500&family=Tilt+Prism&display=swap");
 
 :root {
-    --accent-color: rgb(205, 182, 92);
+	--accent-color: #eee2df;
 
-    --villain-color: black;
-    --villain-text-color: var(--accent-color);
-    --villain-border-style: solid;
+	--villain-color: black;
+	--villain-text-color: var(--accent-color);
+	--villain-border-style: solid;
 
-    --fate-color: #edece6;
-    --fate-text-color: #392922;
+	--fate-color: #edece6;
+	--fate-text-color: #392922;
 
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.5;
+	font-family: "Roboto", sans-serif;
+	line-height: 1.5;
 }
 
 p,
 ul,
 ol {
-    margin: 0;
-    margin-bottom: 1rem;
+	margin: 0;
+	margin-bottom: 1rem;
 }
 
 .keyword-ally,
 .keyword-allies {
-    color: #e41214;
+	color: #e41214;
 }
 
 .keyword-item,
 .keyword-items {
-    color: #41a3d1;
+	color: #41a3d1;
 }
 
 .keyword-hero,
 .keyword-heros {
-    color: #f5a620;
+	color: #f5a620;
 }
 
 .keyword-effect,
 .keyword-effects {
-    color: #8dc10d;
+	color: #8dc10d;
 }
 
 .keyword-condition,
 .keyword-conditions {
-    color: #c35892;
+	color: #c35892;
 }
 
-.card>* {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    z-index: 10;
+.card > * {
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	z-index: 10;
 }
 
 .card,
 .backing {
-    --body-color: var(--villain-color);
-    --text-color: var(--villain-text-color);
+	--body-color: var(--villain-color);
+	--text-color: var(--villain-text-color);
 
-    display: block;
-    color: var(--text-color);
-    aspect-ratio: 63 / 89;
-    position: relative;
-    border-radius: calc(2 * var(--point));
+	display: block;
+	color: var(--text-color);
+	aspect-ratio: 63 / 89;
+	position: relative;
+	border-radius: calc(2 * var(--point));
 }
 
 .fate {
-    --body-color: var(--fate-color);
-    --text-color: var(--fate-text-color);
+	--body-color: var(--fate-color);
+	--text-color: var(--fate-text-color);
 }
 
 .backing {
-    background: var(--body-color);
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    font-size: calc(var(--point) * 60);
-    font-family: 'Tilt Prism', cursive;
-    line-height: 1;
+	background: var(--body-color);
+	justify-content: center;
+	display: flex;
+	align-items: center;
+	font-size: calc(var(--point) * 60);
+	font-family: "Tilt Prism", cursive;
+	line-height: 1;
 }
 
 .backing::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: calc(var(--point) * 4);
-    bottom: calc(var(--point) * 4);
-    left: calc(var(--point) * 4);
-    right: calc(var(--point) * 4);
-    border: var(--villain-border-style) var(--point) var(--accent-color);
+	content: "";
+	display: block;
+	position: absolute;
+	top: calc(var(--point) * 4);
+	bottom: calc(var(--point) * 4);
+	left: calc(var(--point) * 4);
+	right: calc(var(--point) * 4);
+	border: var(--villain-border-style) var(--point) var(--accent-color);
 }
 
 .card {
-    background: linear-gradient(0deg, var(--body-color) 0%, var(--body-color) 52%, white 52%, white 100%);
+	background: linear-gradient(
+		0deg,
+		var(--body-color) 0%,
+		var(--body-color) 52%,
+		white 52%,
+		white 100%
+	);
 }
 
 .card::before {
-    content: "";
-    display: block;
-    z-index: 0;
-    position: absolute;
-    top: 52%;
-    bottom: 3.5%;
-    left: 4%;
-    right: 4%;
-    border: var(--villain-border-style) var(--point) var(--accent-color);
+	content: "";
+	display: block;
+	z-index: 0;
+	position: absolute;
+	top: 52%;
+	bottom: 3.5%;
+	left: 4%;
+	right: 4%;
+	border: var(--villain-border-style) var(--point) var(--accent-color);
 }
 
 .card .name {
-    top: 55%;
-    height: 5%;
-    left: 8%;
-    right: 8%;
-    font-family: 'Crimson Text', serif;
-    font-size: calc(var(--point) * 5);
-    text-transform: uppercase;
+	top: 55%;
+	height: 5%;
+	left: 8%;
+	right: 8%;
+	font-family: "Crimson Text", serif;
+	font-size: calc(var(--point) * 5);
+	text-transform: uppercase;
 
-    padding-bottom: 2%;
-    border-bottom: var(--villain-border-style) var(--point) var(--accent-color);
+	padding-bottom: 2%;
+	border-bottom: var(--villain-border-style) var(--point) var(--accent-color);
 }
 
 .card .kind {
-    top: 93%;
-    height: 5%;
-    font-weight: bold;
-    font-size: calc(var(--point) * 4);
-    width: 100%;
+	top: 93%;
+	height: 5%;
+	font-weight: bold;
+	font-size: calc(var(--point) * 4);
+	width: 100%;
 }
 
 .card .kind span {
-    background-color: var(--body-color);
-    padding: 1%;
-    margin: auto;
-    display: block;
-    margin-top: -1%;
-    line-height: 1;
+	background-color: var(--body-color);
+	padding: 1%;
+	margin: auto;
+	display: block;
+	margin-top: -1%;
+	line-height: 1;
 }
 
 .card .ability {
-    left: 10.5%;
-    right: 10.5%;
-    top: 64%;
-    height: 26%;
-    font-size: calc(var(--point) * 3.7);
-    line-height: 1.2;
-    font-weight: 500;
+	left: 10.5%;
+	right: 10.5%;
+	top: 64%;
+	height: 26%;
+	font-size: calc(var(--point) * 3.7);
+	line-height: 1.2;
+	font-weight: 500;
 }
 
 .card .ability.no-ability {
-    font-style: italic;
+	font-style: italic;
 }
 
 .card .ability.small {
-    font-size: calc(var(--point) * 3.3);
+	font-size: calc(var(--point) * 3.3);
 }
 
 .card .ability br {
-    margin-bottom: calc(var(--point) * 0.5);
+	margin-bottom: calc(var(--point) * 0.5);
 }
 
 .card .cost,
 .card .strength {
-    height: 8%;
-    font-size: calc(5.5 * var(--point));
-    aspect-ratio: 1;
-    border-radius: 50%;
-    border: var(--villain-border-style) var(--point) var(--accent-color);
-    background-color: var(--body-color);
-    font-weight: bold;
+	height: 8%;
+	font-size: calc(5.5 * var(--point));
+	aspect-ratio: 1;
+	border-radius: 50%;
+	border: var(--villain-border-style) var(--point) var(--accent-color);
+	background-color: var(--body-color);
+	font-weight: bold;
 }
 
 .card .cost {
-    left: 4%;
-    top: 4%;
+	left: 4%;
+	top: 4%;
 }
 
 .card .strength {
-    left: 4%;
-    bottom: 3.5%;
+	left: 4%;
+	bottom: 3.5%;
 }
 
 /* Board */
 .board {
-    display: grid;
-    grid-template-columns: 3fr 16fr;
-    aspect-ratio: 100 / 28;
-    color: var(--accent-color);
-    background: var(--villain-color);
-    /* background: url(https://static.wikia.nocookie.net/disney-villainous/images/1/1d/Hookrealm.jpg/revision/latest?cb=20190622020906);
+	display: grid;
+	grid-template-columns: 3fr 16fr;
+	aspect-ratio: 100 / 28;
+	color: var(--accent-color);
+	background: var(--villain-color);
+	/* background: url(https://static.wikia.nocookie.net/disney-villainous/images/1/1d/Hookrealm.jpg/revision/latest?cb=20190622020906);
     background-size: cover; */
 }
 
 .board .portrait {
-    border-right: solid calc(var(--point) / 3) var(--accent-color);
-    background: linear-gradient(0deg, #222 0%, #2d2d2d 100%);
-    position: relative;
+	border-right: solid calc(var(--point) / 3) var(--accent-color);
+	background: linear-gradient(0deg, #222 0%, #2d2d2d 100%);
+	position: relative;
 }
 
-.board .portrait>* {
-    position: absolute
+.board .portrait > * {
+	position: absolute;
 }
 
 .board .portrait .name {
-    top: 3%;
-    font-family: 'Crimson Text', serif;
-    font-size: calc(var(--point) * 4);
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 1;
-    left: 0%;
-    right: 0%;
+	top: 3%;
+	font-family: "Crimson Text", serif;
+	font-size: calc(var(--point) * 4);
+	text-transform: uppercase;
+	text-align: center;
+	line-height: 1;
+	left: 0%;
+	right: 0%;
 }
 
 .board .portrait .desc {
-    top: 63%;
-    height: 34%;
-    left: 6%;
-    width: 88%;
+	top: 63%;
+	height: 34%;
+	left: 6%;
+	width: 88%;
 }
 
 .board .portrait .desc .content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background: var(--villain-color);
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: var(--villain-color);
 }
 
-.board .portrait .desc .content>* {
-    position: absolute
+.board .portrait .desc .content > * {
+	position: absolute;
 }
 
 .board .portrait .desc .content::before {
-    content: "";
-    display: block;
-    z-index: 0;
-    position: absolute;
-    top: 5%;
-    bottom: 5%;
-    left: 5%;
-    right: 5%;
-    border: var(--villain-border-style) var(--point) var(--accent-color);
+	content: "";
+	display: block;
+	z-index: 0;
+	position: absolute;
+	top: 5%;
+	bottom: 5%;
+	left: 5%;
+	right: 5%;
+	border: var(--villain-border-style) var(--point) var(--accent-color);
 }
 
 .board .portrait .desc .content .title {
-    top: 13%;
-    font-family: 'Crimson Text', serif;
-    font-size: calc(var(--point) * 3.5);
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 1;
-    left: 15%;
-    right: 15%;
-    padding-bottom: 2%;
-    border-bottom: var(--villain-border-style) var(--point) var(--accent-color);
+	top: 13%;
+	font-family: "Crimson Text", serif;
+	font-size: calc(var(--point) * 3.5);
+	text-transform: uppercase;
+	text-align: center;
+	line-height: 1;
+	left: 15%;
+	right: 15%;
+	padding-bottom: 2%;
+	border-bottom: var(--villain-border-style) var(--point) var(--accent-color);
 }
 
 .board .portrait .desc .content .objective {
-    left: 16%;
-    right: 16%;
-    top: 33%;
-    height: 55%;
-    font-size: calc(var(--point)*3);
-    line-height: 1.2;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+	left: 16%;
+	right: 16%;
+	top: 33%;
+	height: 55%;
+	font-size: calc(var(--point) * 3);
+	line-height: 1.2;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
 }
 
 .board .locations {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: calc(var(--point) * 2);
-    padding: 0 calc(var(--point) * 2);
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: calc(var(--point) * 2);
+	padding: 0 calc(var(--point) * 2);
 }
 
 .board .locations .location {
-    position: relative;
+	position: relative;
 }
 
-.board .locations .location>* {
-    position: absolute;
-    left: 5%;
-    right: 5%;
-    z-index: 10;
+.board .locations .location > * {
+	position: absolute;
+	left: 5%;
+	right: 5%;
+	z-index: 10;
 }
 
 .board .locations .location .name {
-    top: 83%;
-    height: 4%;
-    font-family: 'Crimson Text', serif;
-    font-size: calc(var(--point) * 4);
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 1;
+	top: 83%;
+	height: 4%;
+	font-family: "Crimson Text", serif;
+	font-size: calc(var(--point) * 4);
+	text-transform: uppercase;
+	text-align: center;
+	line-height: 1;
 }
 
 .board .locations .upper {
-    top: 12%;
-    height: 17%;
+	top: 12%;
+	height: 17%;
 }
 
 .board .locations .lower {
-    top: 60%;
-    height: 17%;
+	top: 60%;
+	height: 17%;
 }
 
 .board .locations .actions {
-    display: flex;
-    justify-content: space-evenly;
-    height: 100%;
-    width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	height: 100%;
+	width: 100%;
 }
 
 .board .locations .action {
-    align-items: center;
-    aspect-ratio: 1;
-    background-color: var(--villain-color);
-    border-radius: 50%;
-    border: double calc(2*var(--point)) var(--accent-color);
-    box-sizing: border-box;
-    display: flex;
-    font-size: calc(var(--point) * 8);
-    font-weight: bold;
-    height: 100%;
-    justify-content: center;
-    text-align: center;
+	align-items: center;
+	aspect-ratio: 1;
+	background-color: var(--villain-color);
+	border-radius: 50%;
+	border: double calc(2 * var(--point)) var(--accent-color);
+	box-sizing: border-box;
+	display: flex;
+	font-size: calc(var(--point) * 8);
+	font-weight: bold;
+	height: 100%;
+	justify-content: center;
+	text-align: center;
 }
 
 .board .locations .bottom-card {
-    border: solid calc(var(--point) / 3) var(--accent-color);
-    border-bottom: none;
-    border-top-right-radius: calc(var(--point) * 5);
-    border-top-left-radius: calc(var(--point) * 5);
-    top: 90%;
-    height: 10%;
+	border: solid calc(var(--point) / 3) var(--accent-color);
+	border-bottom: none;
+	border-top-right-radius: calc(var(--point) * 5);
+	border-top-left-radius: calc(var(--point) * 5);
+	top: 90%;
+	height: 10%;
 }
 
 .board .locations .top-card {
-    border: solid calc(var(--point) / 3) var(--accent-color);
-    border-top: none;
-    border-bottom-right-radius: calc(var(--point) * 5);
-    border-bottom-left-radius: calc(var(--point) * 5);
-    top: 0%;
-    height: 34%;
+	border: solid calc(var(--point) / 3) var(--accent-color);
+	border-top: none;
+	border-bottom-right-radius: calc(var(--point) * 5);
+	border-bottom-left-radius: calc(var(--point) * 5);
+	top: 0%;
+	height: 34%;
 }
 
 .board .locations .image {
-    border: solid calc(var(--point) / 3) var(--accent-color);
-    border-radius: calc(var(--point) * 3);
-    top: 9%;
-    height: 71%;
-    left: 0%;
-    width: 100%;
-    background: linear-gradient(0deg, #222 0%, #2d2d2d 100%);
-    z-index: 0;
+	border: solid calc(var(--point) / 3) var(--accent-color);
+	border-radius: calc(var(--point) * 3);
+	top: 9%;
+	height: 71%;
+	left: 0%;
+	width: 100%;
+	background: linear-gradient(0deg, #222 0%, #2d2d2d 100%);
+	z-index: 0;
 }
